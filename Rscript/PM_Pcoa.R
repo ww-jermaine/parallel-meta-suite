@@ -4,7 +4,7 @@
 # Call: Rscript PM_pcoa.R -m meta_data -d dist_file [-l T/F -o outfile -a axesfile]
 # R packages used: optparse vegan ggplot2 grid
 # Authors: Yuzhu Chen, Yufeng Zhang, Zheng Sun, Yanhai Gong,Wang Honglei, Yanhai Gong, Xiaoquan Su
-# Updated at Aug. 20, 2021
+# Updated at March 13, 2025
 # Updated by Yuzhu Chen
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################

@@ -4,7 +4,7 @@
 # Call: Rscript PM_hcluster.R -d dist_file [-o outfile -k groupNum]
 # R packages used: optparse
 # Authors: Yuzhu Chen, Yanhai Gong, Xiaoquan Su
-# Updated at July 29, 2021
+# Updated at March 13, 2025
 # Updated by Yuzhu Chen
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################

@@ -4,7 +4,7 @@
 # Call: Rscript PM_Marker_Test -m map_file -i abund_file -o out_path -p prefix
 # R packages used: optparse
 # Authors: Yuzhu Chen, Shi Huang, Xiaoquan Su, Gongchao Jing
-# Updated at Aug. 20, 2021
+# Updated at March 13, 2025
 # Updated by Yuzhu Chen
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################

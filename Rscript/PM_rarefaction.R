@@ -4,6 +4,7 @@
 # Call: Rscript Rarefaction.R -i count_table -o outfile
 # R packages used: optparse
 # Last update: 2015-09-18, Zheng Sun, Xiaoquan Su
+# Updated at March 13, 2025
 #################################################################
 
 # Activate renv environment

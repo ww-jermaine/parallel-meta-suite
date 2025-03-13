@@ -1,3 +1,12 @@
+#!/usr/bin/env Rscript
+#################################################################
+# Function:  Helper functions for consistent plotting
+# Call: Source from other scripts
+# R packages used: ggplot2
+# Updated at March 13, 2025
+# Bioinformatics Group, College of Computer Science & Technology, Qingdao University
+#################################################################
+
 # Helper function for consistent ggplot2 themes
 pm_theme <- function() {
   theme_bw() +

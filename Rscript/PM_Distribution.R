@@ -4,7 +4,7 @@
 # Call: Rscript PM_Distribution.R -i abund_file -o outfile
 # R packages used: optparse, reshape2, ggplot2,RColorBrewer, grDevices
 # Authors: Yuzhu Chen, Zheng Sun, Xiaoquan Su, Honglei Wang 
-# Updated at Aug. 20, 2021
+# Updated at March 13, 2025
 # Updated by Yuzhu Chen
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 # data_matrix -> Unclassified

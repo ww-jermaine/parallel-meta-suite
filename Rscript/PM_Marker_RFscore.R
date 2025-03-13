@@ -4,7 +4,7 @@
 # Call: Rscript PM_Marker_RFscore.R -i taxa.abd -m metadata -o outfile
 # R packages used: randomForest ggplot2
 # Authors: Yuzhu Chen, Zheng Sun, Xiaoquan Su
-# Updated at Dec. 10, 2021
+# Updated at March 13, 2025
 # Updated by Yuzhu Chen
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################

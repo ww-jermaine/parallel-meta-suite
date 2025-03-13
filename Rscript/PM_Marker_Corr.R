@@ -4,7 +4,7 @@
 # Call: Rscript PM_Marker_Corr.R -i abund_file -m mapfile(metadata) -o outfile
 # R packages used: psych and optparse
 # Authors: Yuzhu Chen, Shi Huang, Zheng Sun, Xiaoquan Su
-# Updated at Aug. 20, 2021
+# Updated at March 13, 2025
 # Updated by Yuzhu Chen
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################

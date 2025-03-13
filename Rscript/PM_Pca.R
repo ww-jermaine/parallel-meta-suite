@@ -5,7 +5,7 @@
 # R packages used: optparse vegan ggplot2 grid
 # update 2: 2020-10-18, 
 # Authors: Yuzhu Chen, Yufeng Zhang, Zheng Sun, Yanhai Gong,Wang Honglei, Xiaoquan Su
-# Updated at Aug. 20, 2021
+# Updated at March 13, 2025
 # Updated by Yuzhu Chen
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################

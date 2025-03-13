@@ -4,8 +4,7 @@
 # Call: Rscript PM_heatmap.R -d dist_file [-o outfile]
 # R packages used: optparse gplots
 # Authors: Yuzhu Chen, Yanhai Gong, Xiaoquan Su
-# Updated at July 29, 2021
-# Updated by Yuzhu Chen
+# Updated at March 13, 2025
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################
 

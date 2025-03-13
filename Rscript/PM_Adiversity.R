@@ -4,7 +4,7 @@
 # Call: Rscript PM_ADiversity.R -i taxa.abd -m metadata -o outfile
 # R packages used: optparse,vegan fossil abind
 # Authors: Yuzhu Chen, Zheng Sun, Xiaoquan Su
-# Updated at July 4, 2024
+# Updated at March 13, 2025
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################
 

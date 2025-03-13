@@ -3,7 +3,7 @@
 # Function: Initialize renv environment for Parallel-META
 # Call: Rscript renv_setup.R
 # Authors: [Your Name]
-# Updated at: [Date]
+# Updated at: March 13, 2025
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################
 

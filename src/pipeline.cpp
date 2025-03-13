@@ -642,7 +642,7 @@ int main(int argc, char *argv[])
     }
 
     // Clean up temporary renv files in the output directory
-    sprintf(command, "rm -rf %s/.Rprofile %s/renv", Out_path.c_str(), Out_path.c_str());
+    sprintf(command, "rm -rf .Rprofile %s/renv", Out_path.c_str(), Out_path.c_str());
     system(command);
     outscript << command << endl;
 

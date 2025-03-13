@@ -3,7 +3,7 @@
 # Function: Configurate the R packages for Parallel-META
 # Call: Rscript RM_Config.R
 # Authors: Xiaoquan Su, Yuzhu Chen
-# Updated at July 4, 2024
+# Updated at March 13, 2025
 # Updated by [Your Name]
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################

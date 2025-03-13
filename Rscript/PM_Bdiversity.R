@@ -4,7 +4,7 @@
 # Call: Rscript PM_Bdiversity.R -m map_file -d dist_file -o output
 # R packages used: reshape,ggplot2,pheatmap,pROC,combinat,plyr,vegan,optparse,parallel
 # Authors: Yuzhu Chen, Mingqian Zhang
-# Updated at Aug. 20, 2021
+# Updated at March 13, 2025
 # Updated by Yuzhu Chen, Mingqian Zhang
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################
@@ -102,7 +102,7 @@ for(col in colnames(meta_data)) {
 }
 
 # Print column classes after conversion
-cat("Column classes after conversion:", sapply(meta_data, class), "\n")
+# cat("Column classes after conversion:", sapply(meta_data, class), "\n")
 
 if(length(meta_data) == 1){
 	all_group <- colnames(meta_data)
@@ -111,7 +111,7 @@ if(length(meta_data) == 1){
 	all_group_f <- colnames(meta_data)[sapply(meta_data,class)=="factor"]
 	all_group_n <- colnames(meta_data)[sapply(meta_data,class)!="factor"]
 }
-cat("All the sample metadata: ",all_group, "\n\n",sep=" ")
+# cat("All the sample metadata: ",all_group, "\n\n",sep=" ")
 
 # Data Check
 if(any((colnames(dist_matrix)==rownames(dist_matrix))==FALSE)) 
@@ -132,18 +132,18 @@ for(group in all_group) {
 		ano<-anosim(dist_matrix,meta_data[,group],parallel=t)
 		stat_summ[group,4]<-ano.P<-ano$signif
 		stat_summ[group,3]<-ano.R<-ano$statistic
-		cat("ANOSIM (",group,"): \n")
-		cat("--------------------------------")
+		# cat("ANOSIM (",group,"): \n")
+		# cat("--------------------------------")
 		print(ano)
 	}
 	#--------------------------------
 	ado<-adonis(dist_matrix~meta_data[,group],parallel=t)
 	stat_summ[group,2]<-ado.P<-ado$aov.tab$P[1]
 	stat_summ[group,1]<-ado.F<-ado$aov.tab$F.Model[1]
-	cat("ADONIS/PERMANOVA (",group,"): \n")
-	cat("--------------------------------\n")
+	# cat("ADONIS/PERMANOVA (",group,"): \n")
+	# cat("--------------------------------\n")
 	print(ado$aov.tab)
-	cat("--------------------------------\n\n")
+	# cat("--------------------------------\n\n")
 }
 #)
 #write anosim adonis results into xxxx.Beta_diversity_summ.xls (a table include the result)
