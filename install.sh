@@ -61,7 +61,6 @@ else
 fi
 cd ..
 ###Configure environment variables###
-
 if [ "$Check_old_pm" != "" ]
    then
       Checking=`grep ^export\ ParallelMETA  $PATH_File|awk -F '=' '{print $2}'`
@@ -69,34 +68,62 @@ if [ "$Check_old_pm" != "" ]
          then
          if [ "$Sys_ver" = "Darwin" ]
             then
-            sed -i "" "s/^export\ ParallelMETA/$Add_Part\ &/g" $PATH_File
-            sed -i "" -e "`grep -n "$Add_Part" $PATH_File | cut -d ":" -f 1 | head -1` a\ 
-            export\ ParallelMETA=$PM_PATH
-            " $PATH_File
+            # First remove all existing ParallelMETA export lines to avoid duplication
+            sed -i "" "/^export ParallelMETA/d" $PATH_File
+            # Then add the new export line at the end of the file
+            echo "export ParallelMETA=$PM_PATH" >> $PATH_File
          else
-             sed -i "s/^export\ ParallelMETA/$Add_Part\ &/g" $PATH_File
-             sed -i "/$Add_Part\ export\ ParallelMETA/a export\ ParallelMETA=$PM_PATH" $PATH_File
+            # First remove all existing ParallelMETA export lines to avoid duplication
+            sed -i "/^export ParallelMETA/d" $PATH_File
+            # Then add the new export line at the end of the file
+            echo "export ParallelMETA=$PM_PATH" >> $PATH_File
          fi
      fi    
 elif [ "$Check_old_pm" = "" ]
     then
       echo "export ParallelMETA="${PM_PATH} >> $PATH_File
 fi
-if [ "$Check_old_path" = "" ]
+
+# Check and remove any duplicate PATH entries
+if [ "$Check_old_path" != "" ]
     then
-      echo "export PATH=\$PATH:\$ParallelMETA/bin" >> $PATH_File
+      if [ "$Sys_ver" = "Darwin" ]
+         then
+         sed -i "" "/^export PATH=\$PATH:\$ParallelMETA\/bin/d" $PATH_File
+      else
+         sed -i "/^export PATH=\$PATH:\$ParallelMETA\/bin/d" $PATH_File
+      fi
 fi
-if [ "$Check_old_Rscript_path" = "" ]
+
+# Add PATH entry
+echo "export PATH=\$PATH:\$ParallelMETA/bin" >> $PATH_File
+
+# Check and remove any duplicate Rscript PATH entries
+if [ "$Check_old_Rscript_path" != "" ]
     then
-	  echo "export PATH=\$PATH:\$ParallelMETA/Rscript" >> $PATH_File
+      if [ "$Sys_ver" = "Darwin" ]
+         then
+         sed -i "" "/^export PATH=\$PATH:\$ParallelMETA\/Rscript/d" $PATH_File
+      else
+         sed -i "/^export PATH=\$PATH:\$ParallelMETA\/Rscript/d" $PATH_File
+      fi
 fi
+
+# Add Rscript PATH entry
+echo "export PATH=\$PATH:\$ParallelMETA/Rscript" >> $PATH_File
+
 ###Source the environment variable file###
 source $PATH_File
 echo -e "\n**Environment Variables Configuration Complete**"
+
 ###Configurate the R packages###
 echo -e ""
+# First run renv_setup.R to create the renv environment
+Rscript $PM_PATH/Rscript/renv_setup.R
+# Then run config.R to check if all packages are installed
 Rscript $PM_PATH/Rscript/config.R
 chmod +x $PM_PATH/Rscript/PM_*.R
+
 ###End
 echo -e "\n**Parallel-Meta Suite Installation Complete**"
 echo -e "\n**An example dataset with demo script is available in \"example\"**"

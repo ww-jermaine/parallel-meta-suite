@@ -9,14 +9,16 @@
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################
 
-## install necessary libraries
-p <- c("optparse","vegan", "ade4","ggplot2","grid","RColorBrewer")
-usePackage <- function(p) {
-  if (!is.element(p, installed.packages()[,1]))
-    install.packages(p, dep=TRUE, repos="http://cran.us.r-project.org/")
-  suppressWarnings(suppressMessages(invisible(require(p, character.only=TRUE))))
-}
-invisible(lapply(p, usePackage))
+# Activate renv environment
+source(file.path(Sys.getenv("ParallelMETA"), "renv/activate.R"))
+
+# Load required libraries
+library(optparse)
+library(vegan)
+library(ade4)
+library(ggplot2)
+library(grid)
+library(RColorBrewer)
 
 ## clean R environment
 rm(list = ls())

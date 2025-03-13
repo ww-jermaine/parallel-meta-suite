@@ -9,17 +9,20 @@
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 # data_matrix -> Unclassified
 #################################################################
-# install necessary libraries
-p <- c("optparse","reshape2","ggplot2","RColorBrewer")
-usePackage <- function(p) {
-  if (!is.element(p, installed.packages()[,1]))
-    install.packages(p, dep=TRUE, repos="http://cran.us.r-project.org/")
-  suppressWarnings(suppressMessages(invisible(require(p, character.only=TRUE))))
-}
-invisible(lapply(p, usePackage))
+
+# Activate renv environment
+source(file.path(Sys.getenv("ParallelMETA"), "renv/activate.R"))
+
+# Load required libraries
+library(optparse)
+library(reshape2)
+library(ggplot2)
+library(RColorBrewer)
+
 ## clean R environment
 rm(list = ls())
 setwd('./')
+
 ## parsing arguments
 args <- commandArgs(trailingOnly=TRUE)
 # make option list and parse command line

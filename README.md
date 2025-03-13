@@ -1,4 +1,4 @@
-# Parallel-Meta suite users’ manual
+# Parallel-Meta suite users' manual
 
 ![Version](https://img.shields.io/badge/Version-3.7.3-brightgreen)
 ![Release date](https://img.shields.io/badge/Release%20date-Jul.%204%2C%202024-brightgreen)
@@ -37,11 +37,11 @@ OpenMP library is the C/C++ parallel computing library. Most Linux releases have
 	brew install gcc
 	
 ### Rscript environment
-For statistical analysis and pdf format output, PMS requires cran-R (http://cran.r-project.org/) 3.2 or higher for the execution of “.R” scripts. Then all packages could be automatically installed and updated by the PMS installer.
+For statistical analysis and pdf format output, PMS requires cran-R (http://cran.r-project.org/) 3.2 or higher for the execution of ".R" scripts. Then all packages could be automatically installed and updated by the PMS installer.
 ### Vsearch (included in the package)
-Vsearch has been integrated in the package. If you want to install/update manually, please download from https://sourceforge.net/projects/vsearch/ and put the “vsearch” to $ParallelMETA/bin/.
+Vsearch has been integrated in the package. If you want to install/update manually, please download from https://sourceforge.net/projects/vsearch/ and put the "vsearch" to $ParallelMETA/bin/.
 ### HMMER 3 (3.0 or higher, included in the package)
-HMMER3 has been integrated in the package. If you want to install/update manually, please download from http://www.hmmer.org/download.html and put the “hmmsearch” to $ParallelMETA/bin/.
+HMMER3 has been integrated in the package. If you want to install/update manually, please download from http://www.hmmer.org/download.html and put the "hmmsearch" to $ParallelMETA/bin/.
 
 
 # Installation guide
@@ -71,8 +71,8 @@ b. Install
 
 ##### Tips for the automatic installation
 
-1. Please **“cd parallel-meta-suite”** before run the automatic installer.
-2. The automatic installer only configures the environment variables to the default configuration files of “\~/.bashrc” or “\~/.bash_profile”. If you want to configure the environment variables to other configuration file please use the manual installation.
+1. Please "cd parallel-meta-suite" before run the automatic installer.
+2. The automatic installer only configures the environment variables to the default configuration files of "~/.bashrc" or "~/.bash_profile". If you want to configure the environment variables to other configuration file please use the manual installation.
 3. If the automatic installer failed, PMS can still be installed manually by the following steps.
 
 ## Manual installation
@@ -83,7 +83,7 @@ a. Extract the package:
 
 	tar –xzvf parallel-meta-suite.tar.gz
 
-b. Configure the environment variables (default environment variable configuration file is located at “\~/.bashrc” or “\~/.bash_profile”)
+b. Configure the environment variables (default environment variable configuration file is located at "~/.bashrc" or "~/.bash_profile")
 
 	export ParallelMETA=Path to Parallel-Meta
 	export PATH="$PATH:$ParallelMETA/bin"
@@ -130,9 +130,9 @@ Tip: You can also copy this folder to any other directory, e.g.
 
 b. Adjust parameters or keep the default options (according to actual requirements)
 
-c. Click the **“Generate”** button at the bottom of the page to get a command
+c. Click the **"Generate"** button at the bottom of the page to get a command
 
-d. Click the **“Copy”** button to copy it into clipboard
+d. Click the **"Copy"** button to copy it into clipboard
 
 #### Local run
 
@@ -190,7 +190,7 @@ Then you can check the results by the [visualized viewer index.html](#local-gui-
 We also provide a demo output for this example dataset. Click [here](http://bioinfo-ai.cn/downloads/Released_Software/parallel-meta/3.7.3/data/) to download and check for details.
 
 # Tools in toolkit
-Tools can be directly used as Linux command line with parameters. To see all available parameters, please run the command with parameter ‘-h’, e.g.
+Tools can be directly used as Linux command line with parameters. To see all available parameters, please run the command with parameter 'h', e.g.
 
 	PM-pipeline –h
 	
@@ -234,7 +234,7 @@ Tools can be directly used as Linux command line with parameters. To see all ava
 
 # Results interpretation
 
-After using PM-pipeline, you might get the following folders/files in the output directory. In each directory, files/tables/figures are named with prefix “taxa” are taxonomy results, as well as “func” are metabolic functional results. PMS also provides an index page("index.html" in output directory) for results browsing.
+After using PM-pipeline, you might get the following folders/files in the output directory. In each directory, files/tables/figures are named with prefix "taxa" are taxonomy results, as well as "func" are metabolic functional results. PMS also provides an index page("index.html" in output directory) for results browsing.
 
 ### index.html (web page)
 
@@ -287,7 +287,7 @@ d. meta.rna (fasta sequences): The extracted 16S/18S rRNA fragment, if the input
 
 ### Single_Sample.List (dir)
 
-This directory contains the profiling results path list of all samples. Each list has 2 columns: the first column is the samples’ ID and the second column is the path of the profiling result.
+This directory contains the profiling results path list of all samples. Each list has 2 columns: the first column is the samples' ID and the second column is the path of the profiling result.
 
 ### Logs (plain-text file)
 
@@ -322,3 +322,20 @@ Any problem please contact Parallel-Meta Suite development team
 8. K, G.J., et al., Human genetics shape the gut microbiome. Cell, 2014. 159(4).
 9. Iratxe, Z., et al., The Soil Microbiome Influences Grapevine-Associated Microbiota. mBio, 2015. 6(2).
 10. Daniel, M., et al., American Gut: an Open Platform for Citizen Science Microbiome Research. mSystems, 2018. 3(3).
+
+## R Environment Setup
+
+After installing the main package, you need to set up the R environment:
+
+1. Make sure R (version 3.2 or higher) is installed on your system
+2. Set the ParallelMETA environment variable:
+   ```
+   export ParallelMETA=/path/to/parallel-meta-suite
+   ```
+3. Run the R environment setup script:
+   ```
+   cd $ParallelMETA
+   Rscript Rscript/renv_setup.R
+   ```
+
+This will create a reproducible R environment with all required packages at specific versions.

@@ -148,8 +148,8 @@ void Check_Rscript()
     string rscript_path = env_Path + "/Rscript/";
     bool this_part_ok = true;
 
-    const int r_files = 13;
-    string name[r_files] = {"config.R", "PM_Adiversity.R", "PM_Bdiversity.R",
+    const int r_files = 14;
+    string name[r_files] = {"config.R", "renv_setup.R", "PM_Adiversity.R", "PM_Bdiversity.R",
                             "PM_Distribution.R", "PM_Hcluster.R", "PM_Heatmap.R",
                             "PM_Marker_Corr.R", "PM_Marker_RFscore.R", "PM_Marker_Test.R",
                             "PM_Network.R", "PM_Pca.R", "PM_Pcoa.R", "rarefaction.R"};

@@ -4,18 +4,20 @@
 # Call: Rscript PM_ADiversity.R -i taxa.abd -m metadata -o outfile
 # R packages used: optparse,vegan fossil abind
 # Authors: Yuzhu Chen, Zheng Sun, Xiaoquan Su
-# Updated at Aug. 20, 2021
+# Updated at July 4, 2024
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################
 
-# install necessary libraries
-p <- c("optparse","vegan","fossil","abind","ggplot2","RColorBrewer")
-usePackage <- function(p) {
-	if (!is.element(p, installed.packages()[,1]))
-		install.packages(p, dep=TRUE, repos="http://cran.us.r-project.org/")
-	suppressWarnings(suppressMessages(invisible(require(p, character.only=TRUE))))
-}
-invisible(lapply(p, usePackage))
+# Activate renv environment
+source(file.path(Sys.getenv("ParallelMETA"), "renv/activate.R"))
+
+# Load required libraries
+library(optparse)
+library(vegan)
+library(fossil)
+library(abind)
+library(ggplot2)
+library(RColorBrewer)
 
 ## clean R environment
 rm(list = ls())

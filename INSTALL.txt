@@ -1,0 +1,6 @@
+Parallel-Meta-Suite quick installation
+    cd parallel-meta-suite
+    source install.sh
+        
+See "example" folder for demo dataset
+See "Parallel-Meta-Suite.md" for more details

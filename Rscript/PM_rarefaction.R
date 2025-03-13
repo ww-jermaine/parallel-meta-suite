@@ -6,14 +6,18 @@
 # Last update: 2015-09-18, Zheng Sun, Xiaoquan Su
 #################################################################
 
-## install necessary libraries
-p <- c("optparse","vegan","plyr","permute","lattice","reshape2","ggplot2","squash","RColorBrewer","scales","grid" )
-usePackage <- function(p) {
-  if (!is.element(p, installed.packages()[,1]))
-    install.packages(p, dep=TRUE, repos="http://cran.us.r-project.org/")
-  suppressWarnings(suppressMessages(invisible(require(p, character.only=TRUE))))
-}
-invisible(lapply(p, usePackage))
+# Activate renv environment
+source(file.path(Sys.getenv("ParallelMETA"), "renv/activate.R"))
+
+# Load required libraries
+library(optparse)
+library(vegan)
+library(plyr)
+library(permute)
+library(lattice)
+library(ggplot2)
+library(scales)
+library(grid)
 
 ## parsing arguments
 args <- commandArgs(trailingOnly=TRUE)

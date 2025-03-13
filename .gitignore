@@ -32,3 +32,29 @@
 *.app
 
 .vscode/
+
+renv/
+# remove example output files
+out_example/
+
+.Rprofile
+*/renv/
+
+# Exclude large directories from Git tracking
+/bin/
+/databases/
+/example/
+/html/
+/models/
+/PMS-config/
+
+# Include placeholder files in these directories
+!/bin/.gitkeep
+!/databases/.gitkeep
+!/example/.gitkeep
+!/html/.gitkeep
+!/models/.gitkeep
+!/PMS-config/.gitkeep
+
+# macOS specific files
+.DS_Store

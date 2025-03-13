@@ -9,14 +9,11 @@
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################
 
-## install necessary libraries
-p <- c("optparse","RColorBrewer")
-usePackage <- function(p) {
-  if (!is.element(p, installed.packages()[,1]))
-    install.packages(p, dep=TRUE, repos="http://cran.us.r-project.org/")
-  suppressWarnings(suppressMessages(invisible(require(p, character.only=TRUE))))
-}
-invisible(lapply(p, usePackage))
+source(file.path(Sys.getenv("ParallelMETA"), "renv/activate.R"))
+
+# Load required libraries
+library(optparse)
+library(RColorBrewer)
 
 ## clean R environment
 rm(list = ls())

@@ -8,14 +8,12 @@
 #            : its connective numbers. 
 #################################################################
 
-## install necessary libraries
-p <- c("optparse","igraph" )
-usePackage <- function(p) {
-  if (!is.element(p, installed.packages()[,1]))
-    install.packages(p, dep=TRUE, repos="http://cran.us.r-project.org/")
-  suppressWarnings(suppressMessages(invisible(require(p, character.only=TRUE))))
-}
-invisible(lapply(p, usePackage))
+# Activate renv environment
+source(file.path(Sys.getenv("ParallelMETA"), "renv/activate.R"))
+
+# Load required libraries
+library(optparse)
+library(igraph)
 
 ## clean R environment
 rm(list = ls())

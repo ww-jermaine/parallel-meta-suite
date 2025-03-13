@@ -15,8 +15,21 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-
     Parse_Para(argc, argv);
+
+    // Set RENV_PROJECT environment variable to point to the main ParallelMETA directory
+    char renv_command[BUFFER_SIZE];
+    sprintf(renv_command, "export RENV_PROJECT=%s", getenv("ParallelMETA"));
+    system(renv_command);
+
+    // Create .Rprofile in the current directory to ensure it uses the main renv
+    ofstream rprofile(".Rprofile");
+    if (rprofile) {
+        rprofile << "# Point to the main renv environment\n";
+        rprofile << "Sys.setenv(RENV_PROJECT = Sys.getenv(\"ParallelMETA\"))\n";
+        rprofile << "source(file.path(Sys.getenv(\"ParallelMETA\"), \"renv/activate.R\"))\n";
+        rprofile.close();
+    }
 
     char command[BUFFER_SIZE];
     //Parallel for R
@@ -628,10 +641,15 @@ int main(int argc, char *argv[])
         break;
     }
 
-    //if (rmdir(Temp_dir.c_str()) < 0){
+    // Clean up temporary renv files in the output directory
+    sprintf(command, "rm -rf %s/.Rprofile %s/renv", Out_path.c_str(), Out_path.c_str());
+    system(command);
+    outscript << command << endl;
+
+    // Original cleanup code for Temp_dir
     sprintf(command, "rm -rf %s", Temp_dir.c_str());
     system(command);
-    //     }
+    outscript << command << endl;
 
     if (outscript)
     {
