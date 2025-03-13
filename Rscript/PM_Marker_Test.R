@@ -198,7 +198,7 @@ cat(paste("    The number of variables significantly different among ",paste(lev
 }
 #-------------------------------
 sink(paste(outpath,outprefix,".",group.name,".all.meanTests.xls",sep="")); cat("\t"); write.table(result,quote=FALSE,sep="\t");sink()
-sink(paste(outpath,outprefix,".",group.name,".sig.meanTests.xls",sep="")); cat("\t"); write.table(result.sig,,quote=FALSE,sep="\t");sink()
+sink(paste(outpath,outprefix,".",group.name,".sig.meanTests.xls",sep="")); cat("\t"); write.table(result.sig, quote=FALSE, sep="\t"); sink()
 #-------------------------------
 cat("The number of differentially abundant taxa between ",group.name," is: ", nrow(result.sig), "\n",sep="")
 #-------------------------------

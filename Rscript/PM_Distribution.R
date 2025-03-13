@@ -41,7 +41,7 @@ matrixfile <- opts$abund_file
 mapfile <- opts$meta_data
 ave_t <- opts$threshold
 outpath <- opts$out_dir
-dir.create(outpath)
+dir.create(outpath, showWarnings = FALSE, recursive = TRUE)
 #------------------------------------------------------------------------------------
 disbar <- read.table(matrixfile,header = T, row.names = 1,sep="\t")
 #-----------Edit

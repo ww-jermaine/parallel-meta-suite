@@ -61,12 +61,12 @@ PM_pcoa <- function(da, md) {
   sampleNumber <- length(rn)
 
   dst <- as.dist(da)
-  pcoa <- dudi.pco(dst, scan=FALSE, nf=3)
+  da.b.pcoa <- suppressWarnings(dudi.pco(dst, scan = FALSE, nf = 3))
   #print(pcoa$li)
-  loadings <- signif((pcoa$eig)[1:3] / sum(pcoa$eig)*100, digits=3)
+  loadings <- signif((da.b.pcoa$eig)[1:3] / sum(da.b.pcoa$eig)*100, digits=3)
   
-  colnames(pcoa$li)<-c("PC1","PC2","PC3")
-  data<-as.data.frame(pcoa$li)
+  colnames(da.b.pcoa$li)<-c("PC1","PC2","PC3")
+  data<-as.data.frame(da.b.pcoa$li)
   
   # write axes file
   write.table(data,file=axesfile,sep="\t",quote=FALSE,col.names=NA)
@@ -98,11 +98,11 @@ PM_pcoa <- function(da, md) {
         geom_text(data=data,aes(x=PC1,y=PC2,label=group2),hjust=0,vjust=-1,alpha=0.8) +
         scale_colour_manual(values=gcol)+guides(col=guide_legend(colnames(meta)[i],ncol=ceiling(gnum/14))) +
         xlab(paste("PC1 (",loadings[1],"%)")) + ylab(paste("PC2 (",loadings[2],"%)"))  +
-        theme(axis.text.x=element_text(size=14,colour="black"),
-              axis.text.y=element_text(size=14,colour="black"),
+        theme(axis.text.x=element_text(size=14, colour="black"),
+              axis.text.y=element_text(size=14, colour="black"),
               axis.title.x=element_text(size=18),
               axis.title.y=element_text(size=18),
-              panel.border=element_rect(fill=NA),
+              panel.border=element_rect(fill=NA, linewidth=0.5),
               panel.grid.minor=element_blank(),
               panel.background=element_blank(),
 			  legend.key = element_rect(fill="white"),
@@ -117,11 +117,11 @@ PM_pcoa <- function(da, md) {
         geom_text(data=data,aes(x=PC1,y=PC3,label=group2),hjust=0,vjust=-1,alpha=0.8) +
         scale_colour_manual(values=gcol)+guides(col=guide_legend(colnames(meta)[i],ncol=ceiling(gnum/14))) +
         xlab(paste("PC1 (",loadings[1],"%)")) + ylab(paste("PC3 (",loadings[3],"%)")) + 
-        theme(axis.text.x=element_text(size=14,colour="black"),
-              axis.text.y=element_text(size=14,colour="black"),
+        theme(axis.text.x=element_text(size=14, colour="black"),
+              axis.text.y=element_text(size=14, colour="black"),
               axis.title.x=element_text(size=18),
               axis.title.y=element_text(size=18),
-              panel.border=element_rect(fill=NA),
+              panel.border=element_rect(fill=NA, linewidth=0.5),
               panel.grid.minor=element_blank(),
               panel.background=element_blank(),
 			  legend.key = element_rect(fill="white"),
@@ -135,11 +135,11 @@ PM_pcoa <- function(da, md) {
         geom_text(data=data,aes(x=PC2,y=PC3,label=group2),hjust=0,vjust=-1,alpha=0.8) +
         scale_colour_manual(values=gcol)+guides(col=guide_legend(colnames(meta)[i],ncol=ceiling(gnum/14))) +
         xlab(paste("PC2 (",loadings[2],"%)")) + ylab(paste("PC3 (",loadings[3],"%)")) + 
-        theme(axis.text.x=element_text(size=14,colour="black"),
-              axis.text.y=element_text(size=14,colour="black"),
+        theme(axis.text.x=element_text(size=14, colour="black"),
+              axis.text.y=element_text(size=14, colour="black"),
               axis.title.x=element_text(size=18),
               axis.title.y=element_text(size=18),
-              panel.border=element_rect(fill=NA),
+              panel.border=element_rect(fill=NA, linewidth=0.5),
               panel.grid.minor=element_blank(),
               panel.background=element_blank(),
 			  legend.key = element_rect(fill="white"),
@@ -152,11 +152,11 @@ PM_pcoa <- function(da, md) {
         geom_point(data=data,aes(x=PC1,y=PC2,colour=group),stat='identity',size=ps) +
         scale_colour_manual(values=gcol)+guides(col=guide_legend(colnames(meta)[i],ncol=ceiling(gnum/14))) +
         xlab(paste("PC1 (",loadings[1],"%)")) + ylab(paste("PC2 (",loadings[2],"%)")) + 
-        theme(axis.text.x=element_text(size=14,colour="black"),
-              axis.text.y=element_text(size=14,colour="black"),
+        theme(axis.text.x=element_text(size=14, colour="black"),
+              axis.text.y=element_text(size=14, colour="black"),
               axis.title.x=element_text(size=18),
               axis.title.y=element_text(size=18),
-              panel.border=element_rect(fill=NA),
+              panel.border=element_rect(fill=NA, linewidth=0.5),
               panel.grid.minor=element_blank(),
               panel.background=element_blank(),
 			  legend.key = element_rect(fill="white"),
@@ -170,11 +170,11 @@ PM_pcoa <- function(da, md) {
         geom_point(data=data,aes(x=PC1,y=PC3,colour=group),stat='identity',size=ps) +
         scale_colour_manual(values=gcol)+guides(col=guide_legend(colnames(meta)[i],ncol=ceiling(gnum/14))) +
         xlab(paste("PC1 (",loadings[1],"%)")) + ylab(paste("PC3 (",loadings[3],"%)")) + 
-        theme(axis.text.x=element_text(size=14,colour="black"),
-              axis.text.y=element_text(size=14,colour="black"),
+        theme(axis.text.x=element_text(size=14, colour="black"),
+              axis.text.y=element_text(size=14, colour="black"),
               axis.title.x=element_text(size=18),
               axis.title.y=element_text(size=18),
-              panel.border=element_rect(fill=NA),
+              panel.border=element_rect(fill=NA, linewidth=0.5),
               panel.grid.minor=element_blank(),
               panel.background=element_blank(),
 			  legend.key = element_rect(fill="white"),
@@ -187,11 +187,11 @@ PM_pcoa <- function(da, md) {
         geom_point(data=data,aes(x=PC2,y=PC3,colour=group),stat='identity',size=ps) +
         scale_colour_manual(values=gcol)+guides(col=guide_legend(colnames(meta)[i],ncol=ceiling(gnum/14))) +
         xlab(paste("PC2 (",loadings[2],"%)")) + ylab(paste("PC3 (",loadings[3],"%)")) +
-        theme(axis.text.x=element_text(size=14,colour="black"),
-              axis.text.y=element_text(size=14,colour="black"),
+        theme(axis.text.x=element_text(size=14, colour="black"),
+              axis.text.y=element_text(size=14, colour="black"),
               axis.title.x=element_text(size=18),
               axis.title.y=element_text(size=18),
-              panel.border=element_rect(fill=NA),
+              panel.border=element_rect(fill=NA, linewidth=0.5),
               panel.grid.minor=element_blank(),
               panel.background=element_blank(),
 			  legend.key = element_rect(fill="white"),

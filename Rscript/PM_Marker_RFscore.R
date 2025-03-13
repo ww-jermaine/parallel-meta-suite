@@ -61,9 +61,20 @@ for (i in 2:ncol(data_map)) {
 		tempframe=data.frame(data_matrix,status=as.factor(data_map[,i])) 
 		#to regenerate a dataframe with discrete variable as last col                                                       
 		bm.rf <- randomForest(status ~ .,data=tempframe,importance=T,proximity=T,ntree=opts$ntree)
-		framebm <- data.frame(importance(bm.rf,type = 1))
+		framebm <- data.frame(importance(bm.rf, type = 1))
 		error_rate <- mean(bm.rf$confusion[,dim(bm.rf$confusion)[2]])
-		IL <- ggplot(framebm,aes(y=reorder(row.names(framebm),framebm$MeanDecreaseAccuracy),x=framebm$MeanDecreaseAccuracy))+geom_point(size=3,colour="#D55E00")+geom_segment(aes(yend=row.names(framebm)),xend=0,colour="#D55E00")+theme_bw()+theme(panel.grid.major.y=element_blank(),panel.grid.major.x=element_blank())+xlab(paste("Importance (mean decrease in accuracy)")) + ylab(paste("Features"))+ggtitle(paste("Random-Forest Score (error rate = ",round(error_rate, digits = 4)*100,"%)",sep="")) + theme(title=element_text(size=10),plot.title=element_text(hjust = 0.5),axis.title.x=element_text(margin=margin(15,0,0,0)),axis.title.y=element_text(margin=margin(0,15,0,0)),plot.margin = unit(c(1,1.5,0.7,0.7),'lines'))
+		IL <- ggplot(framebm, aes(y=reorder(row.names(framebm), framebm$MeanDecreaseAccuracy), x=framebm$MeanDecreaseAccuracy)) +
+			geom_point(size=3, colour="#D55E00") +
+			geom_segment(aes(yend=row.names(framebm)), xend=0, colour="#D55E00") +
+			theme_bw() +
+			theme(panel.grid.major.y=element_blank(), panel.grid.major.x=element_blank()) +
+			xlab(paste("Importance (mean decrease in accuracy)")) + 
+			ylab(paste("Features")) +
+			ggtitle(paste("Random-Forest Score (error rate = ", round(error_rate, digits = 4)*100, "%)", sep="")) + 
+			theme(title=element_text(size=10), plot.title=element_text(hjust = 0.5),
+					axis.title.x=element_text(margin=margin(15,0,0,0)),
+					axis.title.y=element_text(margin=margin(0,15,0,0)),
+					plot.margin = unit(c(1,1.5,0.7,0.7), 'lines'))
 		newframebm <- data.frame(framebm,sn=row.names(framebm),sl=framebm[,1])
 		outtxtfile <- paste(opts$prefix,".",names(data_map[i]),".RFimportance.txt", sep="")  #outputtxt
 		cat(paste("Random-Forest Score (error rate = ",round(error_rate,digits = 4)*100,"%)\n",sep=""),file=outtxtfile)

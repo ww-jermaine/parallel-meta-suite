@@ -53,7 +53,7 @@ if(is.null(opts$meta_data)) stop('Please input a meta data file')
 if(is.null(opts$dist_file)) stop('Please input a distance matrix table')
 
 # create output directory
-dir.create(outpath1<-paste(opts$out_dir,"/",sep=""),showWarnings=FALSE, recursive=TRUE)
+dir.create(outpath1 <- paste(opts$out_dir, "/", sep=""), showWarnings=FALSE, recursive=TRUE)
 
 # read arguments
 dist_matrix_name<-opts$dist_file                       
@@ -71,17 +71,45 @@ t<-opts$threads
 dist_matrix <- read.table(dist_matrix_name,header=T,row.names=1)
 meta_data <- read.table(meta_name,header=T,sep="\t",row.names=1,as.is=FALSE)
 
-#write anosim adonis process into xxx.Beta_diversity_log.txt
-con <- file(paste(opts$out_dir,'/',prefix,'.Beta_diversity_log.txt',sep=''))
-sink(con, append=TRUE)
-sink(con, append=TRUE, type='message')
+# Clean row names if they contain line numbers
+if(any(grepl("^[0-9]+\\|", rownames(meta_data)))) {
+  rownames(meta_data) <- gsub("^[0-9]+\\|", "", rownames(meta_data))
+}
+
+# Also clean column names in distance matrix if needed
+if(any(grepl("^[0-9]+\\|", colnames(dist_matrix)))) {
+  colnames(dist_matrix) <- gsub("^[0-9]+\\|", "", colnames(dist_matrix))
+}
+
+# Also clean row names in distance matrix if needed
+if(any(grepl("^[0-9]+\\|", rownames(dist_matrix)))) {
+  rownames(dist_matrix) <- gsub("^[0-9]+\\|", "", rownames(dist_matrix))
+}
+
+# Print first few row names to debug
+cat("First few row names in meta_data:", head(rownames(meta_data)), "\n")
+cat("First few row names in dist_matrix:", head(rownames(dist_matrix)), "\n")
+
+# After cleaning row names
+# Print column classes before conversion
+cat("Column classes before conversion:", sapply(meta_data, class), "\n")
+
+# Convert character columns to factors (except numeric columns)
+for(col in colnames(meta_data)) {
+  if(!is.numeric(meta_data[,col])) {
+    meta_data[,col] <- as.factor(meta_data[,col])
+  }
+}
+
+# Print column classes after conversion
+cat("Column classes after conversion:", sapply(meta_data, class), "\n")
 
 if(length(meta_data) == 1){
 	all_group <- colnames(meta_data)
 }else{
 	all_group <- colnames(meta_data)
-	all_group_f<-colnames(meta_data)[sapply(meta_data,class)=="factor"]
-	all_group_n<-colnames(meta_data)[sapply(meta_data,class)!="factor"]
+	all_group_f <- colnames(meta_data)[sapply(meta_data,class)=="factor"]
+	all_group_n <- colnames(meta_data)[sapply(meta_data,class)!="factor"]
 }
 cat("All the sample metadata: ",all_group, "\n\n",sep=" ")
 
@@ -181,8 +209,15 @@ if(length(all_group_f)>=1){
 		sink(filepath);write.table(plot_value,quote=FALSE,sep='\t',row.names=FALSE);sink()
 		## Output distance boxplot
 		if(nlevels(group)<30){
-			plot<-qplot(x=GroupPair, y=Dist, data=plot_value, geom='boxplot',position='dodge',main='',xlab="Group pair",ylab=paste(dist_name,' Distance',sep=''),outlier.alpha=0) + coord_flip() +  theme_bw() + theme(axis.title.x=element_text(margin=margin(15,0,0,0)),axis.title.y=element_text(margin=margin(0,15,0,0)),plot.margin = unit(c(0.5,1.3,0.8,0.9),'lines'))
-			suppressMessages(ggsave(filename=paste(outpath2,dist_name,'.',group_name,'.boxplot.ggplot.pdf',sep=''),plot=plot,height=ifelse(nlevels(mt)>2,nlevels(mt),2))) 
+			plot <- ggplot(plot_value, aes(x=GroupPair, y=Dist)) + 
+				geom_boxplot(outlier.alpha=0) + 
+				coord_flip() + 
+				labs(x="Group pair", y=paste(dist_name, ' Distance', sep='')) + 
+				theme_bw() + 
+				theme(axis.title.x=element_text(margin=margin(15,0,0,0)),
+					  axis.title.y=element_text(margin=margin(0,15,0,0)),
+					  plot.margin = unit(c(0.5,1.3,0.8,0.9),'lines'))
+			suppressMessages(ggsave(filename=paste(outpath2,dist_name,'.',group_name,'.boxplot.ggplot.pdf',sep=''),plot=plot,height=ifelse(nlevels(mt)>2,nlevels(mt),2)))
 		}
 		rm(plot)
 		b_plot_value<-data.frame(Grouping=rep(g,nrow(plot_value)),plot_value)
@@ -194,7 +229,17 @@ if(length(all_group_f)>=1){
 		rm(plot_value)
 		rm(b_plot_value)
 	}
-	p<-qplot(x=Grouping, y=Dist, data=bp_value, geom="boxplot", fill=DistType, position="dodge",main="", ylab=paste(dist_name," Distance",sep=""),outlier.alpha=0)+coord_flip()+ theme_bw() +theme(axis.title.x=element_text(margin=margin(15,0,0,0)),axis.title.y=element_text(margin=margin(0,15,0,0)),panel.grid.major=element_line(colour=NA),panel.grid.minor=element_line(colour=NA),plot.margin = unit(rep(0.6,4),'lines'))
+	p <- ggplot(bp_value, aes(x=Grouping, y=Dist, fill=DistType)) + 
+		geom_boxplot(outlier.alpha=0) + 
+		coord_flip() + 
+		labs(y=paste(dist_name, " Distance", sep="")) + 
+		theme_bw() + 
+		theme(axis.title.x=element_text(margin=margin(15,0,0,0)),
+			  axis.title.y=element_text(margin=margin(0,15,0,0)),
+			  panel.grid.major=element_line(colour=NA),
+			  panel.grid.minor=element_line(colour=NA),
+			  panel.border=element_rect(fill=NA, linewidth=0.5),
+			  plot.margin = unit(rep(0.6,4),'lines'))
 	suppressMessages(ggsave(filename=paste(outpath1,"/",prefix,".Beta_diversity_DistBoxplot.pdf",sep=""),plot=p, limitsize=TRUE, width=6, height=ifelse(length(all_group_f)>1,length(all_group_f)*1.4,2)))
 	rm(p)
 	rm(bp_value)
@@ -206,7 +251,8 @@ if(length(all_group_f)>=1){
 #--------------------------------
 if(length(all_group_n)>=1){
 	for(group in all_group_n){
-		dir.create(outpath2<-paste(outpath1,prefix,".",group,"/",sep=""))
+		dir.create(outpath2 <- paste(outpath1, prefix, ".", group, "/", sep=""), 
+				   showWarnings=FALSE, recursive=TRUE)
 		
 		dist_num<-data.matrix(dist(meta_data[,group]))
 		dm_n_value<-dist_num[lower.tri(dist_num, diag = FALSE)]
@@ -220,7 +266,17 @@ if(length(all_group_n)>=1){
 		rm(dm_n_value)
 		rm(dm_value)
 		
-		p<-ggplot(data=dm_data, aes(x=group,y=dm))+geom_point(alpha=0.2)+annotate("text", x=max(dm_data$group)*0.9, y=max(dm_data$dm)*0.9, label= paste("Rho=",round(corr$estimate,2),"\n","P=",round(corr$p.value,4),"\n",sep=""))+ ylab(paste(dist_name," Distance",sep="")) + xlab(bquote(paste(~Delta, .(group),sep=" ")))+theme_bw()+ theme(axis.title.x=element_text(margin=margin(10,0,0,0)),axis.title.y=element_text(margin=margin(0,10,0,0)),plot.margin = unit(c(1,1,0.5,0.5),"lines")) 
+		p <- ggplot(data=dm_data, aes(x=group, y=dm)) + 
+			geom_point(alpha=0.2) + 
+			annotate("text", x=max(dm_data$group)*0.9, y=max(dm_data$dm)*0.9, 
+					 label= paste("Rho=", round(corr$estimate,2), "\n", "P=", round(corr$p.value,4), "\n", sep="")) + 
+			ylab(paste(dist_name, " Distance", sep="")) + 
+			xlab(bquote(paste(~Delta, .(group), sep=" "))) + 
+			theme_bw() + 
+			theme(axis.title.x=element_text(margin=margin(10,0,0,0)),
+				  axis.title.y=element_text(margin=margin(0,10,0,0)),
+				  panel.border=element_rect(fill=NA, linewidth=0.5),
+				  plot.margin = unit(c(1,1,0.5,0.5), "lines"))
 		
 		if(corr$estimate>0.4 && corr$p.value<0.01) p<-p+geom_smooth(method = "loess", se=TRUE, span=1) 
 		suppressMessages(ggsave(filename=paste(outpath2,"/",prefix,".Beta_diversity_",group,".Scatterplot",".pdf",sep=""),plot=p, limitsize=TRUE, width=4, height=4))

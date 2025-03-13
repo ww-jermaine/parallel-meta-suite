@@ -64,11 +64,11 @@ Neg_Edge <- opts$negative_edges
 
 #init graph
 if (Pos_Edge & Neg_Edge){
-   g <- graph.adjacency(abs(Corr) > Threshold & abs(Corr)<1,mode="undirected")
+   g <- graph_from_adjacency_matrix(abs(Corr) > Threshold & abs(Corr)<1,mode="undirected", weighted=TRUE, diag=FALSE)
 }else if (Pos_Edge){
-     g <- graph.adjacency(Corr > Threshold & Corr < 1,mode="undirected")
+     g <- graph_from_adjacency_matrix(Corr > Threshold & Corr < 1,mode="undirected", weighted=TRUE, diag=FALSE)
 }else if (Neg_Edge){
-     g <- graph.adjacency(Corr < -1 * Threshold & Corr > -1 ,mode="undirected")
+     g <- graph_from_adjacency_matrix(Corr < -1 * Threshold & Corr > -1 ,mode="undirected", weighted=TRUE, diag=FALSE)
 }else stop('Please check the pos/neg edges parameters')
 
 E(g)$color <- 'grey'
@@ -97,7 +97,10 @@ for(i in 1:(length(Corr)-1)){
 
 #****PDF name****
 pdf(opts$outfile,width=15,height=15)
-str = paste("Threshold: ",Threshold,"  Nodes: ",length(V(g)),"  Islands: ",clusters(g)$no, "\n# of Pos edge: ",Pos_Edge_N, "  # of Neg edge: ",Neg_Edge_N, "  Edge length: ",average.path.length(g),"\nDensity: ",graph.density(g),"  Diameter: ",diameter(g),"  Radius: ",radius(g),"  Centralization:",centralization.closeness(g)$centralization)
+str = paste("Threshold: ", Threshold, "  Nodes: ", length(V(g)), "  Islands: ", components(g)$no, "\n",
+            "# of Pos edge: ", Pos_Edge_N, "  # of Neg edge: ", Neg_Edge_N, "  Edge length: ", mean_distance(g), "\n",
+            "Density: ", edge_density(g), "  Diameter: ", diameter(g), "  Radius: ", radius(g), 
+            "  Centralization:", centr_clo(g)$centralization)
 plot(g, layout=layout.fruchterman.reingold,main=str,edge.label=E(g)$weight, vertex.size=map(degree(g),c(1,10)), vertex.color=map(degree(g),c(1,10)))
 legend("top",c("pos","neg"),lty=c(1,1),col=c("green","red"))
 invisible(dev.off())
